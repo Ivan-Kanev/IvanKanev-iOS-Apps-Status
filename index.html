@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ivan Kanev Apps — Status</title>
+<title>Ivan Kanev Apps</title>
 
 <style>
 :root{
   --bg:#f5f5f7;
-  --card:#ffffff;
   --text:#1d1d1f;
   --muted:#86868b;
   --line:#d2d2d7;
@@ -16,7 +15,6 @@
   --green:#34c759;
   --yellow:#f7c600;
   --red:#ff3b30;
-  --shadow:0 30px 80px rgba(0,0,0,.14);
   --radius:28px;
 }
 
@@ -24,32 +22,27 @@
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;
   color:var(--text);
   background:
     radial-gradient(900px 450px at 10% -10%,rgba(0,102,204,.12),transparent),
     radial-gradient(800px 420px at 90% 0%,rgba(255,204,0,.18),transparent),
-    linear-gradient(180deg,#fff 0%,var(--bg) 100%);
-  min-height:100vh;
+    linear-gradient(#fff,var(--bg));
 }
 
 .page{
-  max-width:1320px;
+  max-width:1200px;
   margin:auto;
-  padding:28px 28px 80px;
+  padding:30px 24px 80px;
 }
 
+/* TOP BAR */
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   border-bottom:1px solid var(--line);
-  padding-bottom:18px;
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(22px);
+  padding-bottom:16px;
 }
 
 .brand{
@@ -60,8 +53,7 @@ body{
 
 .brand h1{
   margin:0;
-  font-size:36px;
-  letter-spacing:-.04em;
+  font-size:34px;
 }
 
 .badge{
@@ -72,109 +64,104 @@ body{
   border-radius:50%;
   background:var(--blue);
   color:white;
-  font-weight:700;
+  text-decoration:none;
 }
 
+.topnav{
+  display:flex;
+  gap:22px;
+}
+
+.topnav a{
+  text-decoration:none;
+  color:var(--blue);
+  font-size:14px;
+}
+
+/* HERO */
 .hero{
   text-align:center;
-  padding:62px 20px 34px;
+  padding:60px 20px 30px;
 }
 
 .hero h2{
-  font-size:52px;
-  line-height:1.02;
-  margin:0 0 14px;
-  letter-spacing:-.05em;
+  font-size:48px;
+  margin:0 0 12px;
 }
 
 .hero p{
-  margin:0 auto;
-  max-width:760px;
+  max-width:700px;
+  margin:auto;
   color:var(--muted);
-  font-size:19px;
-  line-height:1.5;
+  font-size:18px;
 }
 
 .legend{
-  margin-top:26px;
+  margin-top:20px;
   display:flex;
   justify-content:center;
-  gap:22px;
-  flex-wrap:wrap;
-  color:#555;
+  gap:20px;
   font-size:14px;
 }
 
 .dot{
-  width:14px;
-  height:14px;
+  width:12px;
+  height:12px;
   border-radius:50%;
   display:inline-block;
-  vertical-align:-2px;
-  margin-right:8px;
+  margin-right:6px;
 }
 
 .green{background:var(--green)}
 .yellow{background:var(--yellow)}
 .red{background:var(--red)}
 
-.status-panel{
-  margin-top:22px;
-  background:rgba(255,255,255,.74);
-  border:1px solid rgba(210,210,215,.72);
-  border-radius:34px;
-  box-shadow:0 20px 70px rgba(0,0,0,.08);
+/* GRID */
+.grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--line);
+  border-radius:28px;
   overflow:hidden;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-}
-
 .app{
-  min-height:154px;
-  padding:28px;
   display:flex;
-  gap:20px;
-  align-items:center;
-  cursor:pointer;
+  gap:18px;
+  padding:24px;
   border-bottom:1px solid var(--line);
   border-right:1px solid var(--line);
-  transition:.25s ease;
-  background:rgba(255,255,255,.56);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.app:hover{
+  background:#fff;
+  transform:translateY(-2px);
 }
 
 .app:nth-child(3n){border-right:0}
 
-.app:hover{
-  background:white;
-  transform:translateY(-3px);
-  box-shadow:0 18px 50px rgba(0,0,0,.08);
-  z-index:2;
-}
-
+/* ICON */
 .icon{
-  width:86px;
-  height:86px;
-  border-radius:24px;
-  flex:0 0 auto;
-  box-shadow:0 14px 28px rgba(0,0,0,.15);
+  width:80px;
+  height:80px;
+  border-radius:20px;
   overflow:hidden;
-  background:#fff;
+  box-shadow:0 10px 20px rgba(0,0,0,.15);
 }
 
 .icon img{
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
 }
 
-.app-info h3{
-  margin:0 0 8px;
-  font-size:22px;
-  letter-spacing:-.03em;
+/* TEXT */
+.app h3{
+  margin:0;
+  font-size:20px;
 }
 
 .meta{
@@ -182,451 +169,148 @@ body{
   color:var(--muted);
 }
 
-.meta .mini-dot{
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  background:var(--yellow);
-  display:inline-block;
-  margin-right:6px;
-}
-
 .tagline{
-  margin-top:8px;
+  margin-top:6px;
   font-size:14px;
-  color:#555;
-  line-height:1.35;
 }
 
+/* MODAL */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.36);
-  backdrop-filter:blur(18px);
+  background:rgba(0,0,0,.4);
   display:none;
   align-items:center;
   justify-content:center;
-  padding:24px;
-  z-index:100;
 }
 
 .modal.active{display:flex}
 
 .sheet{
-  width:min(980px,100%);
-  max-height:90vh;
-  overflow:auto;
-  border-radius:36px;
-  background:
-    radial-gradient(700px 320px at 10% 0%,rgba(0,102,204,.13),transparent),
-    radial-gradient(620px 320px at 90% 0%,rgba(255,204,0,.18),transparent),
-    #fff;
-  box-shadow:var(--shadow);
-  animation:pop .28s ease;
-}
-
-@keyframes pop{
-  from{opacity:0; transform:translateY(22px) scale(.98)}
-  to{opacity:1; transform:none}
-}
-
-.sheet-head{
-  padding:34px;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:22px;
-  align-items:center;
-  border-bottom:1px solid var(--line);
-}
-
-.close{
-  border:0;
-  background:#f5f5f7;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:22px;
-  color:#555;
-}
-
-.sheet h2{
-  margin:0;
-  font-size:42px;
-  letter-spacing:-.05em;
-}
-
-.sheet-sub{
-  margin-top:8px;
-  color:var(--muted);
-  font-size:17px;
-}
-
-.sheet-body{
-  padding:34px;
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:28px;
-}
-
-.card{
-  background:rgba(255,255,255,.76);
-  border:1px solid rgba(210,210,215,.8);
-  border-radius:26px;
-  padding:26px;
-}
-
-.card h4{
-  margin:0 0 14px;
-  font-size:20px;
-}
-
-.card p{
-  color:#555;
-  line-height:1.65;
-  margin:0;
-}
-
-.features{
-  display:grid;
-  gap:12px;
-}
-
-.feature{
-  padding:16px;
-  border-radius:18px;
-  background:#f5f5f7;
-  color:#333;
-  line-height:1.45;
+  background:white;
+  border-radius:30px;
+  padding:30px;
+  max-width:900px;
+  width:100%;
 }
 
 .actions{
-  margin-top:24px;
+  margin-top:20px;
   display:flex;
-  gap:12px;
-  flex-wrap:wrap;
+  gap:10px;
 }
 
 .btn{
+  padding:12px 16px;
+  border-radius:12px;
   text-decoration:none;
-  border-radius:16px;
-  padding:13px 18px;
-  font-weight:700;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
+  font-weight:600;
 }
 
-.primary{background:#000;color:white}
-.secondary{background:#f5f5f7;color:var(--blue)}
+.primary{background:black;color:white}
+.secondary{background:#eee;color:#06c}
 
-.footer{
-  text-align:center;
-  padding:42px 20px 0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-@media(max-width:920px){
-  .grid{grid-template-columns:1fr}
-  .app{border-right:0}
-  .sheet-body{grid-template-columns:1fr}
-  .hero h2{font-size:40px}
-  .brand h1{font-size:30px}
-}
-
-@media(max-width:560px){
-  .topbar{align-items:flex-start}
-  .app{padding:22px; min-height:130px}
-  .icon{width:70px;height:70px;border-radius:20px}
-  .sheet-head{grid-template-columns:auto 1fr; padding:24px}
-  .close{grid-column:2; justify-self:end; grid-row:1}
-  .sheet h2{font-size:32px}
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:22px;
 }
 </style>
 </head>
 
 <body>
 <div class="page">
-  <header class="topbar">
-    <div class="brand">
-      <h1>Apps</h1>
-      <div class="badge">+</div>
-    </div>
-  </header>
 
-  <section class="hero">
-    <h2>My App Portfolio Status</h2>
-    <p>
-      This is my personal app dashboard — a central place where I present the products I build,
-      their current review status, what each app does, and the idea behind it. Click any app to
-      explore its purpose, key features, support page, and privacy information.
-    </p>
-
-    <div class="legend">
-      <span><i class="dot green"></i>Available</span>
-      <span><i class="dot yellow"></i>Waiting for Review</span>
-      <span><i class="dot red"></i>Issue</span>
-    </div>
-  </section>
-
-  <main class="status-panel">
-    <div class="grid" id="appsGrid"></div>
-  </main>
-
-  <div class="footer">
-    © 2026 Ivan Kanev Apps · Built for GitHub Pages
+<header class="topbar">
+  <div class="brand">
+    <h1>Apps</h1>
+    <a class="badge" href="#apps">+</a>
   </div>
+
+  <nav class="topnav">
+    <a href="#apps">Apps</a>
+    <a href="#about">About</a>
+    <a href="mailto:ikanev@icloud.com">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="about">
+  <h2>My App Portfolio</h2>
+  <p>
+    This is my personal app dashboard — a place where I present everything I build,
+    track each product’s status, and share what each app is designed to do.
+  </p>
+
+  <div class="legend">
+    <span><i class="dot green"></i>Available</span>
+    <span><i class="dot yellow"></i>Waiting for Review</span>
+    <span><i class="dot red"></i>Issue</span>
+  </div>
+</section>
+
+<div class="grid" id="apps"></div>
+
 </div>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="sheet">
-    <div class="sheet-head">
-      <div class="icon" id="modalIcon"></div>
-      <div>
-        <h2 id="modalTitle"></h2>
-        <div class="sheet-sub" id="modalSubtitle"></div>
-      </div>
-      <button class="close" id="closeBtn">×</button>
-    </div>
+    <span class="close" onclick="closeModal()">×</span>
 
-    <div class="sheet-body">
-      <div class="card">
-        <h4>What it does</h4>
-        <p id="modalDescription"></p>
+    <h2 id="title"></h2>
+    <p id="desc"></p>
 
-        <div class="actions">
-          <a class="btn primary" id="supportLink" target="_blank">Open Support Page</a>
-          <a class="btn secondary" id="privacyLink" target="_blank">Privacy</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <h4>Highlights</h4>
-        <div class="features" id="modalFeatures"></div>
-      </div>
+    <div class="actions">
+      <a id="home" class="btn primary" target="_blank">Marketing Page</a>
+      <a id="support" class="btn secondary" target="_blank">Support</a>
+      <a id="privacy" class="btn secondary" target="_blank">Privacy</a>
     </div>
   </div>
 </div>
 
 <script>
 const apps = [
-  {
-    name:"UFood",
-    version:"iOS 1.0",
-    status:"Waiting for Review",
-    icon:"assets/ufood.png",
-    subtitle:"Private recipe studio for iPhone and iPad",
-    url:"https://ivan-kanev.github.io/ufood-support/index.html",
-    privacy:"https://ivan-kanev.github.io/ufood-support/privacy.html",
-    description:"UFood is a private recipe studio that helps users save meals, organize personal recipes with photos, track favorites, and understand cooking habits through beautiful food statistics and nutrition-style estimates.",
-    features:[
-      "Create recipes with ingredients, steps, servings, prep time and photos.",
-      "Browse a polished private food library with meal filters and favorites.",
-      "Understand cooking habits with taste map, rankings, calories and protein estimates.",
-      "Local-first, private, Apple-native experience."
-    ]
-  },
-  {
-    name:"VideoY",
-    version:"iOS 1.0",
-    status:"Waiting for Review",
-    icon:"assets/videoy.png",
-    subtitle:"Clean YouTube-focused web experience",
-    url:"https://ivan-kanev.github.io/videoy-support/index.html",
-    privacy:"https://ivan-kanev.github.io/videoy-support/privacy.html",
-    description:"VideoY is a lightweight native-feeling wrapper around the YouTube mobile web experience. It focuses on clean browsing, fast access, simple navigation, sharing, and a more focused viewing flow.",
-    features:[
-      "Launches directly into YouTube mobile web.",
-      "Native controls for home, back, forward, reload, sign-in and sharing.",
-      "Gesture-friendly browsing with a minimal bottom control bar.",
-      "Does not download, extract or modify YouTube content."
-    ]
-  },
-  {
-    name:"AvoCue",
-    version:"iOS 1.0",
-    status:"Waiting for Review",
-    icon:"assets/avocue.png",
-    subtitle:"Smart avocado freshness guidance",
-    url:"https://ivan-kanev.github.io/avocue-support/index.html",
-    privacy:"https://ivan-kanev.github.io/avocue-support/privacy.html",
-    description:"AvoCue helps users evaluate avocado ripeness, track what they bought, review past checks, and make better timing decisions through a premium dark interface.",
-    features:[
-      "Quick avocado freshness and ripeness guidance.",
-      "Camera-centered flow for fast visual checking.",
-      "History tracking for previous results.",
-      "Premium dark UI with glass-like panels and consistent navigation."
-    ]
-  },
-  {
-    name:"SwitchAir",
-    version:"iOS 1.0",
-    status:"Waiting for Review",
-    icon:"assets/switchair.png",
-    subtitle:"Flight reminders, refined",
-    url:"https://ivan-kanev.github.io/switchair-support/index.html",
-    privacy:"https://ivan-kanev.github.io/switchair-support/privacy.html",
-    description:"SwitchAir helps travelers remember exactly when to enable and disable Airplane Mode. It supports boarding pass import, manual flight entry, precise local reminders, and a clean flight history.",
-    features:[
-      "Takeoff reminders before departure.",
-      "Landing reminders after arrival.",
-      "Flight details with airline, route, departure, arrival and duration.",
-      "Import using image/OCR or enter flights manually."
-    ]
-  },
-  {
-    name:"BudgetFlow Studio",
-    version:"iOS 1.0.2",
-    status:"Waiting for Review",
-    icon:"assets/budgetflow.png",
-    subtitle:"Visual-first personal finance",
-    url:"https://ivan-kanev.github.io/budgetflow-studio-support/index.html",
-    privacy:"https://ivan-kanev.github.io/budgetflow-studio-support/privacy.html",
-    description:"BudgetFlow Studio is a privacy-first personal finance app designed around visual clarity instead of spreadsheets. It focuses on flows, bars, trends, predictions and deep analytics.",
-    features:[
-      "No accounts, no subscriptions, privacy-first.",
-      "Dashboard for instant financial overview.",
-      "Spending bars and flow visualizations.",
-      "Advanced insights, predictions and trends with Pro."
-    ]
-  },
-  {
-    name:"UProxi",
-    version:"iOS 1.0.2",
-    status:"Waiting for Review",
-    icon:"assets/uproxy.png",
-    subtitle:"Location-aware loyalty cards for Bulgaria",
-    url:"https://ivan-kanev.github.io/uproxi-support/index.html",
-    privacy:"https://ivan-kanev.github.io/uproxi-support/privacy.html",
-    description:"UProxi shows the right loyalty card when the user is near a supported store in Bulgaria. It reduces searching at checkout with proximity hints, card scanning, and organized local storage.",
-    features:[
-      "Nearby supported stores with distance indicators.",
-      "One-tap barcode or QR card display.",
-      "Card list with brand icons and quick actions.",
-      "Local notifications when a relevant card is nearby."
-    ]
-  },
-  {
-    name:"UCircuit",
-    version:"iOS 1.0.2",
-    status:"Waiting for Review",
-    icon:"assets/ucircuit.PNG",
-    subtitle:"First engineering lab for kids",
-    url:"https://ivan-kanev.github.io/ucircuit-support/index.html",
-    privacy:"https://ivan-kanev.github.io/ucircuit-support/privacy.html",
-    description:"UCircuit is a playful visual learning app that helps children understand electricity through guided circuit labs, safe experimentation, instant feedback, badges and a parent-friendly Pro unlock.",
-    features:[
-      "Guided labs starting from Battery + Bulb + Switch.",
-      "Instant animation-based feedback.",
-      "Badges, favorites and progress motivation.",
-      "Free starter lab plus one-time Pro unlock."
-    ]
-  },
-  {
-    name:"GitBudget Studio",
-    version:"iOS 1.0.2",
-    status:"Waiting for Review",
-    icon:"assets/gitbudget.PNG",
-    subtitle:"Income, expenses and trends",
-    url:"https://ivan-kanev.github.io/gitbudgetstudio-support/",
-    privacy:"https://ivan-kanev.github.io/gitbudgetstudio-support/privacy.html",
-    description:"GitBudget Studio is a modern personal finance app focused on clarity, income, expenses, trends and visual understanding rather than spreadsheet-style budgeting.",
-    features:[
-      "Income overview and expense tracking.",
-      "Smart history with edit, duplicate and transaction management.",
-      "Trends, sources and drains for financial behavior.",
-      "Fast transaction entry and readable charts."
-    ]
-  },
-  {
-    name:"CircuitLab Designer",
-    version:"iOS 1.3",
-    status:"Waiting for Review",
-    icon:"assets/circuitlabdesigner.png",
-    subtitle:"Build circuits. See electricity.",
-    url:"https://ivan-kanev.github.io/circuitlab-designer-support/index.html",
-    privacy:"https://ivan-kanev.github.io/circuitlab-designer-support/privacy.html",
-    description:"CircuitLab Designer teaches how electrical circuits work through interactive challenges, progressive levels, smart hints, instant feedback and a clean offline learning experience.",
-    features:[
-      "Progressive circuit-building levels.",
-      "Smart hints without spoilers.",
-      "Instant feedback when a circuit works.",
-      "Minimal offline learning UI."
-    ]
-  }
+{n:"UFood",i:"assets/ufood.png",u:"https://ivan-kanev.github.io/ufood-support/",p:"https://ivan-kanev.github.io/ufood-support/privacy.html",d:"Private recipe app"},
+{n:"VideoY",i:"assets/videoy.png",u:"https://ivan-kanev.github.io/videoy-support/",p:"https://ivan-kanev.github.io/videoy-support/privacy.html",d:"YouTube web experience"},
+{n:"AvoCue",i:"assets/avocue.png",u:"https://ivan-kanev.github.io/avocue-support/",p:"https://ivan-kanev.github.io/avocue-support/privacy.html",d:"Avocado freshness app"},
+{n:"SwitchAir",i:"assets/switchair.png",u:"https://ivan-kanev.github.io/switchair-support/",p:"https://ivan-kanev.github.io/switchair-support/privacy.html",d:"Flight reminders"},
+{n:"BudgetFlow",i:"assets/budgetflow.png",u:"https://ivan-kanev.github.io/budgetflow-studio-support/",p:"https://ivan-kanev.github.io/budgetflow-studio-support/privacy.html",d:"Finance visualization"},
+{n:"UProxi",i:"assets/uproxy.png",u:"https://ivan-kanev.github.io/uproxi-support/",p:"https://ivan-kanev.github.io/uproxi-support/privacy.html",d:"Loyalty cards"},
+{n:"UCircuit",i:"assets/ucircuit.PNG",u:"https://ivan-kanev.github.io/ucircuit-support/",p:"https://ivan-kanev.github.io/ucircuit-support/privacy.html",d:"Kids circuits"},
+{n:"GitBudget",i:"assets/gitbudget.PNG",u:"https://ivan-kanev.github.io/gitbudgetstudio-support/",p:"https://ivan-kanev.github.io/gitbudgetstudio-support/privacy.html",d:"Budget tracking"},
+{n:"CircuitLab",i:"assets/circuitlabdesigner.png",u:"https://ivan-kanev.github.io/circuitlab-designer-support/",p:"https://ivan-kanev.github.io/circuitlab-designer-support/privacy.html",d:"Circuit learning"}
 ];
 
-const grid = document.getElementById("appsGrid");
-const modal = document.getElementById("modal");
-const closeBtn = document.getElementById("closeBtn");
+const grid = document.getElementById("apps");
 
-function render(){
-  grid.innerHTML = "";
+apps.forEach(a=>{
+  const el=document.createElement("div");
+  el.className="app";
+  el.innerHTML=`
+    <div class="icon"><img src="${a.i}"></div>
+    <div>
+      <h3>${a.n}</h3>
+      <div class="meta"><span class="dot yellow"></span>Waiting for Review</div>
+      <div class="tagline">${a.d}</div>
+    </div>
+  `;
+  el.onclick=()=>openModal(a);
+  grid.appendChild(el);
+});
 
-  apps.forEach((app) => {
-    const item = document.createElement("article");
-    item.className = "app";
-
-    item.innerHTML = `
-      <div class="icon">
-        <img src="${app.icon}" alt="${app.name} icon">
-      </div>
-      <div class="app-info">
-        <h3>${app.name}</h3>
-        <div class="meta"><span class="mini-dot"></span>${app.version} ${app.status}</div>
-        <div class="tagline">${app.subtitle}</div>
-      </div>
-    `;
-
-    item.onclick = () => openModal(app);
-    grid.appendChild(item);
-  });
-}
-
-function openModal(app){
-  document.getElementById("modalIcon").innerHTML =
-    `<img src="${app.icon}" alt="${app.name} icon">`;
-
-  document.getElementById("modalTitle").textContent = app.name;
-
-  document.getElementById("modalSubtitle").innerHTML =
-    `<span class="dot yellow"></span>${app.version} · ${app.status} · ${app.subtitle}`;
-
-  document.getElementById("modalDescription").textContent = app.description;
-  document.getElementById("supportLink").href = app.url;
-  document.getElementById("privacyLink").href = app.privacy;
-
-  const features = document.getElementById("modalFeatures");
-  features.innerHTML = "";
-
-  app.features.forEach(f => {
-    const div = document.createElement("div");
-    div.className = "feature";
-    div.textContent = f;
-    features.appendChild(div);
-  });
-
-  modal.classList.add("active");
-  document.body.style.overflow = "hidden";
+function openModal(a){
+  document.getElementById("title").innerText=a.n;
+  document.getElementById("desc").innerText=a.d;
+  document.getElementById("home").href=a.u;
+  document.getElementById("support").href=a.u;
+  document.getElementById("privacy").href=a.p;
+  document.getElementById("modal").classList.add("active");
 }
 
 function closeModal(){
-  modal.classList.remove("active");
-  document.body.style.overflow = "";
+  document.getElementById("modal").classList.remove("active");
 }
-
-closeBtn.onclick = closeModal;
-
-modal.onclick = e => {
-  if(e.target === modal) closeModal();
-};
-
-document.addEventListener("keydown", e => {
-  if(e.key === "Escape") closeModal();
-});
-
-render();
 </script>
+
 </body>
 </html>
