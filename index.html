@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ivan Kanev Apps</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ivan Kanev Apps — Portfolio Status</title>
 
 <style>
 :root{
@@ -15,196 +15,815 @@
   --blue:#06c;
   --green:#34c759;
   --yellow:#f7c600;
+  --red:#ff3b30;
   --shadow:0 30px 80px rgba(0,0,0,.14);
+  --radius:28px;
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,sans-serif;
   color:var(--text);
-  background:linear-gradient(#fff,var(--bg));
-  transition:.3s;
+  background:
+    radial-gradient(900px 450px at 10% -10%,rgba(0,102,204,.14),transparent),
+    radial-gradient(800px 420px at 90% 0%,rgba(255,204,0,.18),transparent),
+    linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-/* DARK MODE */
-body.dark{
-  --bg:#05070d;
-  --card:#111827;
-  --text:#f5f5f7;
-  --muted:#a1a1aa;
-  --line:rgba(255,255,255,.15);
-  background:linear-gradient(#070a12,#02040a);
+body::before{
+  content:"";
+  position:fixed;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(0,102,204,.10),transparent 28%),
+    radial-gradient(circle at 80% 15%,rgba(255,204,0,.12),transparent 26%),
+    radial-gradient(circle at 50% 80%,rgba(52,199,89,.08),transparent 30%);
+  animation:ambient 18s ease-in-out infinite alternate;
+  pointer-events:none;
+  z-index:-1;
 }
 
-/* TOP */
+@keyframes ambient{
+  from{transform:translate3d(-2%,0,0) scale(1)}
+  to{transform:translate3d(2%,2%,0) scale(1.06)}
+}
+
+.page{
+  max-width:1320px;
+  margin:auto;
+  padding:28px 28px 80px;
+}
+
+/* TOP BAR */
 .topbar{
   display:flex;
   justify-content:space-between;
-  padding:20px;
-  border-bottom:1px solid var(--line);
+  align-items:center;
+  border-bottom:1px solid rgba(210,210,215,.8);
+  padding:22px 0 18px;
+  background:transparent;
 }
 
-.brand{display:flex;gap:10px;align-items:center}
-.brand h1{margin:0}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-.top-actions{display:flex;gap:10px}
+.brand h1{
+  margin:0;
+  font-size:36px;
+  letter-spacing:-.04em;
+}
 
-.theme-toggle,.contact-btn{
-  border:0;
-  padding:10px 16px;
+.badge{
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--blue);
+  color:white;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 8px 24px rgba(0,102,204,.28);
+}
+
+.contact-btn{
+  color:white;
+  background:#111;
+  padding:11px 18px;
   border-radius:999px;
-  cursor:pointer;
-  font-weight:600;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:700;
+  box-shadow:0 14px 32px rgba(0,0,0,.16);
+  transition:.25s ease;
 }
 
-.theme-toggle{background:#eee}
-.contact-btn{background:black;color:white}
+.contact-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
 
 /* HERO */
-.hero{text-align:center;padding:40px}
-.hero p{color:var(--muted)}
+.hero{
+  text-align:center;
+  padding:66px 20px 36px;
+}
 
-.legend{display:flex;justify-content:center;gap:20px}
-.dot{width:10px;height:10px;border-radius:50%}
-.green{background:#34c759}
-.yellow{background:#f7c600}
+.hero h2{
+  font-size:56px;
+  line-height:1.02;
+  margin:0 0 16px;
+  letter-spacing:-.055em;
+}
 
-/* GRID */
+.hero p{
+  margin:0 auto;
+  max-width:790px;
+  color:var(--muted);
+  font-size:19px;
+  line-height:1.55;
+}
+
+.legend{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+  gap:22px;
+  flex-wrap:wrap;
+  color:#555;
+  font-size:14px;
+}
+
+.dot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-block;
+  vertical-align:-2px;
+  margin-right:8px;
+}
+
+.green{background:var(--green)}
+.yellow{background:var(--yellow)}
+.red{background:var(--red)}
+
+.pulse{
+  animation:pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(247,198,0,.45)}
+  50%{box-shadow:0 0 0 8px rgba(247,198,0,0)}
+}
+
+/* STATUS PANEL */
+.status-panel{
+  margin-top:24px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(210,210,215,.72);
+  border-radius:34px;
+  box-shadow:0 24px 80px rgba(0,0,0,.09);
+  overflow:hidden;
+  backdrop-filter:blur(22px);
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
 }
 
 .app{
+  min-height:156px;
+  padding:28px;
   display:flex;
-  gap:15px;
-  padding:20px;
+  gap:20px;
+  align-items:center;
+  cursor:pointer;
   border-bottom:1px solid var(--line);
   border-right:1px solid var(--line);
-  cursor:pointer;
+  transition:.28s cubic-bezier(.2,.8,.2,1);
+  background:rgba(255,255,255,.48);
+  position:relative;
+  overflow:hidden;
 }
 
-.app:hover{background:var(--card)}
+.app::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.75),transparent);
+  transform:translateX(-120%);
+  transition:.55s ease;
+}
 
-.icon{width:70px;height:70px;border-radius:15px;overflow:hidden}
-.icon img{width:100%}
+.app:hover::after{
+  transform:translateX(120%);
+}
+
+.app:nth-child(3n){border-right:0}
+
+.app:hover{
+  background:white;
+  transform:translateY(-4px) scale(1.01);
+  box-shadow:0 22px 60px rgba(0,0,0,.09);
+  z-index:2;
+}
+
+.icon{
+  width:88px;
+  height:88px;
+  border-radius:24px;
+  flex:0 0 auto;
+  box-shadow:0 16px 34px rgba(0,0,0,.16);
+  overflow:hidden;
+  background:#fff;
+  position:relative;
+  z-index:1;
+}
+
+.icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.app-info{
+  position:relative;
+  z-index:1;
+}
+
+.app-info h3{
+  margin:0 0 8px;
+  font-size:22px;
+  letter-spacing:-.03em;
+}
+
+.meta{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.meta .mini-dot{
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:var(--yellow);
+  display:inline-block;
+  margin-right:6px;
+}
+
+.tagline{
+  margin-top:8px;
+  font-size:14px;
+  color:#555;
+  line-height:1.35;
+}
 
 /* MODAL */
 .modal{
   position:fixed;
   inset:0;
+  background:rgba(0,0,0,.36);
+  backdrop-filter:blur(20px);
   display:none;
-  background:rgba(0,0,0,.5);
   align-items:center;
   justify-content:center;
+  padding:24px;
+  z-index:100;
 }
 
 .modal.active{display:flex}
 
 .sheet{
-  background:var(--card);
-  padding:30px;
-  border-radius:20px;
-  max-width:700px;
+  width:min(1020px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:36px;
+  background:
+    radial-gradient(760px 340px at 10% 0%,rgba(0,102,204,.14),transparent),
+    radial-gradient(620px 320px at 90% 0%,rgba(255,204,0,.18),transparent),
+    #fff;
+  box-shadow:var(--shadow);
+  animation:pop .30s cubic-bezier(.2,.8,.2,1);
 }
 
-.actions{margin-top:20px;display:flex;gap:10px}
+@keyframes pop{
+  from{opacity:0; transform:translateY(24px) scale(.975)}
+  to{opacity:1; transform:none}
+}
+
+.sheet-head{
+  padding:34px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:24px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+}
+
+.close{
+  border:0;
+  background:#f5f5f7;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:24px;
+  color:#555;
+  transition:.2s ease;
+}
+
+.close:hover{
+  background:#e9e9ed;
+  transform:rotate(90deg);
+}
+
+.sheet h2{
+  margin:0;
+  font-size:44px;
+  letter-spacing:-.055em;
+}
+
+.sheet-sub{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.4;
+}
+
+.sheet-body{
+  padding:34px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:28px;
+}
+
+.card{
+  background:rgba(255,255,255,.76);
+  border:1px solid rgba(210,210,215,.8);
+  border-radius:26px;
+  padding:26px;
+  box-shadow:0 16px 42px rgba(0,0,0,.055);
+}
+
+.card h4{
+  margin:0 0 14px;
+  font-size:20px;
+  letter-spacing:-.02em;
+}
+
+.card p{
+  color:#555;
+  line-height:1.65;
+  margin:0;
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:22px;
+}
+
+.detail{
+  background:#f5f5f7;
+  border-radius:18px;
+  padding:15px;
+}
+
+.detail strong{
+  display:block;
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.detail span{
+  color:#666;
+  font-size:13px;
+}
+
+.features{
+  display:grid;
+  gap:12px;
+}
+
+.feature{
+  padding:16px;
+  border-radius:18px;
+  background:#f5f5f7;
+  color:#333;
+  line-height:1.45;
+  transition:.2s ease;
+}
+
+.feature:hover{
+  transform:translateX(4px);
+  background:#eeeef2;
+}
+
+.actions{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
 
 .btn{
-  padding:10px 14px;
-  border-radius:10px;
   text-decoration:none;
-  font-weight:600;
+  border-radius:16px;
+  padding:13px 18px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:.25s ease;
 }
 
-.primary{background:black;color:white}
-.secondary{background:#eee;color:#06c}
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.primary{
+  background:#000;
+  color:white;
+  box-shadow:0 14px 30px rgba(0,0,0,.20);
+}
+
+.secondary{
+  background:#f5f5f7;
+  color:var(--blue);
+}
+
+.footer{
+  text-align:center;
+  padding:42px 20px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* RESPONSIVE */
+@media(max-width:920px){
+  .grid{grid-template-columns:1fr}
+  .app{border-right:0}
+  .sheet-body{grid-template-columns:1fr}
+  .hero h2{font-size:42px}
+  .brand h1{font-size:32px}
+}
+
+@media(max-width:560px){
+  .page{padding:22px 18px 60px}
+  .topbar{align-items:center}
+  .hero{padding:48px 4px 28px}
+  .hero h2{font-size:36px}
+  .hero p{font-size:17px}
+  .app{padding:22px; min-height:132px}
+  .icon{width:72px;height:72px;border-radius:20px}
+  .sheet-head{grid-template-columns:auto 1fr; padding:24px}
+  .close{grid-column:2; justify-self:end; grid-row:1}
+  .sheet h2{font-size:32px}
+  .sheet-body{padding:24px}
+  .detail-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 
 <body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <h1>Apps</h1>
+      <a class="badge" href="#appsGrid" title="View my apps">+</a>
+    </div>
 
-<div class="topbar">
-  <div class="brand"><h1>Apps</h1></div>
-
-  <div class="top-actions">
-    <button id="themeToggle" class="theme-toggle">🌙 Dark</button>
     <a class="contact-btn" href="mailto:ikanev@icloud.com">Contact</a>
+  </header>
+
+  <section class="hero">
+    <h2>My App Portfolio Status</h2>
+    <p>
+      This is my personal app dashboard — a central place where I present the products I build,
+      their current review status, what each app is designed to do, and the idea behind every product.
+      Click any app to explore its purpose, highlights, support page, privacy information, and marketing page.
+    </p>
+
+    <div class="legend">
+      <span><i class="dot green"></i>Available</span>
+      <span><i class="dot yellow pulse"></i>Waiting for Review</span>
+      <span><i class="dot red"></i>Issue</span>
+    </div>
+  </section>
+
+  <main class="status-panel">
+    <div class="grid" id="appsGrid"></div>
+  </main>
+
+  <div class="footer">
+    © 2026 Ivan Kanev Apps · Built for GitHub Pages
   </div>
 </div>
 
-<section class="hero">
-  <p>This is my personal app dashboard where I showcase all my products.</p>
-
-  <div class="legend">
-    <span><i class="dot green"></i>Available</span>
-    <span><i class="dot yellow"></i>Waiting for Review</span>
-  </div>
-</section>
-
-<div class="grid" id="grid"></div>
-
 <div class="modal" id="modal">
   <div class="sheet">
-    <h2 id="title"></h2>
-    <p id="desc"></p>
+    <div class="sheet-head">
+      <div class="icon" id="modalIcon"></div>
+      <div>
+        <h2 id="modalTitle"></h2>
+        <div class="sheet-sub" id="modalSubtitle"></div>
+      </div>
+      <button class="close" id="closeBtn">×</button>
+    </div>
 
-    <div class="actions">
-      <a id="marketing" class="btn primary" target="_blank">Marketing</a>
-      <a id="support" class="btn secondary" target="_blank">Support</a>
-      <a id="privacy" class="btn secondary" target="_blank">Privacy</a>
+    <div class="sheet-body">
+      <div class="card">
+        <h4>What it does</h4>
+        <p id="modalDescription"></p>
+
+        <div class="detail-grid">
+          <div class="detail">
+            <strong>Platform</strong>
+            <span id="modalPlatform"></span>
+          </div>
+          <div class="detail">
+            <strong>Status</strong>
+            <span id="modalStatus"></span>
+          </div>
+          <div class="detail">
+            <strong>Focus</strong>
+            <span id="modalFocus"></span>
+          </div>
+          <div class="detail">
+            <strong>Privacy</strong>
+            <span id="modalPrivacyNote"></span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" id="marketingLink" target="_blank">Marketing Page</a>
+          <a class="btn secondary" id="supportLink" target="_blank">Support</a>
+          <a class="btn secondary" id="privacyLink" target="_blank">Privacy</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Highlights</h4>
+        <div class="features" id="modalFeatures"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-const apps=[
-{name:"UFood",icon:"assets/ufood.png",m:"https://ivan-kanev.github.io/ufood-support/",p:"https://ivan-kanev.github.io/ufood-support/privacy.html"},
-{name:"VideoY",icon:"assets/videoy.png",m:"https://ivan-kanev.github.io/videoy-support/",p:"https://ivan-kanev.github.io/videoy-support/privacy.html"},
-{name:"AvoCue",icon:"assets/avocue.png",m:"https://ivan-kanev.github.io/avocue-support/",p:"https://ivan-kanev.github.io/avocue-support/privacy.html"},
-{name:"SwitchAir",icon:"assets/switchair.png",m:"https://ivan-kanev.github.io/switchair-support/",p:"https://ivan-kanev.github.io/switchair-support/privacy.html"},
-{name:"BudgetFlow",icon:"assets/budgetflow.png",m:"https://ivan-kanev.github.io/budgetflow-studio-support/",p:"https://ivan-kanev.github.io/budgetflow-studio-support/privacy.html"},
-{name:"UProxi",icon:"assets/uproxy.png",m:"https://ivan-kanev.github.io/uproxi-support/",p:"https://ivan-kanev.github.io/uproxi-support/privacy.html"},
-{name:"UCircuit",icon:"assets/ucircuit.PNG",m:"https://ivan-kanev.github.io/ucircuit-support/",p:"https://ivan-kanev.github.io/ucircuit-support/privacy.html"},
-{name:"GitBudget",icon:"assets/gitbudget.PNG",m:"https://ivan-kanev.github.io/gitbudgetstudio-support/",p:"https://ivan-kanev.github.io/gitbudgetstudio-support/privacy.html"},
-{name:"CircuitLab",icon:"assets/circuitlabdesigner.png",m:"https://ivan-kanev.github.io/circuitlab-designer-support/",p:"https://ivan-kanev.github.io/circuitlab-designer-support/privacy.html"}
+const apps = [
+  {
+    name:"UFood",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"assets/ufood.png",
+    subtitle:"Private recipe studio for iPhone and iPad",
+    marketing:"https://ivan-kanev.github.io/ufood-support/index.html",
+    support:"https://ivan-kanev.github.io/ufood-support/support.html",
+    privacy:"https://ivan-kanev.github.io/ufood-support/privacy.html",
+    platform:"iPhone / iPad",
+    focus:"Recipes, food organization, cooking insights",
+    privacyNote:"Local-first and privacy-focused",
+    description:"UFood is a private recipe studio designed to help users save meals, organize personal recipes, add photos, track favorites, and understand their cooking habits through clean food statistics and nutrition-style estimates.",
+    features:[
+      "Create recipes with ingredients, steps, servings, preparation time and photos.",
+      "Browse a polished personal food library with filters, favorites and clean visual organization.",
+      "Review cooking habits through rankings, taste patterns and nutrition-style estimates.",
+      "Built around a private, simple and personal cooking experience."
+    ]
+  },
+  {
+    name:"VideoY",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"assets/videoy.png",
+    subtitle:"Clean YouTube-focused web experience",
+    marketing:"https://ivan-kanev.github.io/videoy-support/index.html",
+    support:"https://ivan-kanev.github.io/videoy-support/support.html",
+    privacy:"https://ivan-kanev.github.io/videoy-support/privacy.html",
+    platform:"iPhone / iPad",
+    focus:"Focused video browsing",
+    privacyNote:"No video downloading or content extraction",
+    description:"VideoY is a lightweight, native-feeling app that opens a clean YouTube mobile web experience with simple navigation, sharing, refresh controls and a focused viewing flow.",
+    features:[
+      "Launches directly into the YouTube mobile web experience.",
+      "Includes native controls for home, back, forward, refresh, sign-in and sharing.",
+      "Designed for a cleaner and more focused browsing experience.",
+      "Does not download, extract, modify or redistribute YouTube content."
+    ]
+  },
+  {
+    name:"AvoCue",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"assets/avocue.png",
+    subtitle:"Smart avocado freshness guidance",
+    marketing:"https://ivan-kanev.github.io/avocue-support/index.html",
+    support:"https://ivan-kanev.github.io/avocue-support/support.html",
+    privacy:"https://ivan-kanev.github.io/avocue-support/privacy.html",
+    platform:"iPhone",
+    focus:"Freshness, ripeness and food timing",
+    privacyNote:"Designed around simple private use",
+    description:"AvoCue helps users evaluate avocado ripeness, track freshness checks, review previous results and make better timing decisions through a premium dark interface.",
+    features:[
+      "Quick avocado freshness and ripeness guidance.",
+      "Camera-centered flow for fast visual checking.",
+      "History tracking for previous checks and results.",
+      "Premium dark interface with a polished, focused experience."
+    ]
+  },
+  {
+    name:"SwitchAir",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"assets/switchair.png",
+    subtitle:"Flight reminders, refined",
+    marketing:"https://ivan-kanev.github.io/switchair-support/index.html",
+    support:"https://ivan-kanev.github.io/switchair-support/support.html",
+    privacy:"https://ivan-kanev.github.io/switchair-support/privacy.html",
+    platform:"iPhone",
+    focus:"Travel reminders and flight timing",
+    privacyNote:"Personal flight utility with minimal data needs",
+    description:"SwitchAir helps travelers remember exactly when to enable and disable Airplane Mode. It supports boarding pass import, manual flight entry, local reminders and a clean flight history.",
+    features:[
+      "Takeoff reminders before departure.",
+      "Landing reminders after arrival.",
+      "Flight details including airline, route, departure, arrival and duration.",
+      "Supports image/OCR import and manual flight entry."
+    ]
+  },
+  {
+    name:"BudgetFlow Studio",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"assets/budgetflow.png",
+    subtitle:"Visual-first personal finance",
+    marketing:"https://ivan-kanev.github.io/budgetflow-studio-support/index.html",
+    support:"https://ivan-kanev.github.io/budgetflow-studio-support/support.html",
+    privacy:"https://ivan-kanev.github.io/budgetflow-studio-support/privacy.html",
+    platform:"iPhone",
+    focus:"Spending, income, analytics and predictions",
+    privacyNote:"No accounts, no tracking, privacy-first",
+    description:"BudgetFlow Studio is a privacy-first personal finance app designed around visual clarity instead of spreadsheet-style budgeting. It focuses on flows, spending bars, trends, predictions and deep analytics.",
+    features:[
+      "Clean dashboard for an instant financial overview.",
+      "Spending bars and flow-style visualizations.",
+      "Advanced insights, predictions and trend analysis.",
+      "Designed for users who want finance clarity without complexity."
+    ]
+  },
+  {
+    name:"UProxi",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"assets/uproxy.png",
+    subtitle:"Location-aware loyalty cards for Bulgaria",
+    marketing:"https://ivan-kanev.github.io/uproxi-support/index.html",
+    support:"https://ivan-kanev.github.io/uproxi-support/support.html",
+    privacy:"https://ivan-kanev.github.io/uproxi-support/privacy.html",
+    platform:"iPhone",
+    focus:"Loyalty cards, stores and proximity reminders",
+    privacyNote:"Built for useful local reminders",
+    description:"UProxi shows the right loyalty card when the user is near a supported store in Bulgaria. It reduces searching at checkout with proximity hints, card scanning and organized local storage.",
+    features:[
+      "Nearby supported stores with distance indicators.",
+      "One-tap barcode or QR loyalty card display.",
+      "Organized card list with brand icons and quick actions.",
+      "Local notifications when a relevant card is nearby."
+    ]
+  },
+  {
+    name:"UCircuit",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"assets/ucircuit.PNG",
+    subtitle:"First engineering lab for kids",
+    marketing:"https://ivan-kanev.github.io/ucircuit-support/index.html",
+    support:"https://ivan-kanev.github.io/ucircuit-support/support.html",
+    privacy:"https://ivan-kanev.github.io/ucircuit-support/privacy.html",
+    platform:"iPhone / iPad",
+    focus:"Kids learning, electricity and circuits",
+    privacyNote:"Child-friendly and privacy-conscious",
+    description:"UCircuit is a playful visual learning app that helps children understand electricity through guided circuit labs, safe experimentation, instant feedback, badges and a parent-friendly Pro unlock.",
+    features:[
+      "Guided labs starting from simple Battery + Bulb + Switch concepts.",
+      "Instant animation-based feedback when circuits work.",
+      "Badges, favorites and progress motivation.",
+      "Designed as a gentle first engineering lab for kids."
+    ]
+  },
+  {
+    name:"GitBudget Studio",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"assets/gitbudget.PNG",
+    subtitle:"Income, expenses and trends",
+    marketing:"https://ivan-kanev.github.io/gitbudgetstudio-support/",
+    support:"https://ivan-kanev.github.io/gitbudgetstudio-support/support.html",
+    privacy:"https://ivan-kanev.github.io/gitbudgetstudio-support/privacy.html",
+    platform:"iPhone",
+    focus:"Budget tracking and financial behavior",
+    privacyNote:"Personal finance data stays focused on the user",
+    description:"GitBudget Studio is a modern personal finance app focused on clarity, income, expenses, trends and visual understanding rather than spreadsheet-style budgeting.",
+    features:[
+      "Income overview and expense tracking.",
+      "Smart history with edit, duplicate and transaction management.",
+      "Trends, top sources and drains for understanding financial behavior.",
+      "Fast transaction entry and readable visual summaries."
+    ]
+  },
+  {
+    name:"CircuitLab Designer",
+    version:"iOS 1.3",
+    status:"Waiting for Review",
+    icon:"assets/circuitlabdesigner.png",
+    subtitle:"Build circuits. See electricity.",
+    marketing:"https://ivan-kanev.github.io/circuitlab-designer-support/index.html",
+    support:"https://ivan-kanev.github.io/circuitlab-designer-support/support.html",
+    privacy:"https://ivan-kanev.github.io/circuitlab-designer-support/privacy.html",
+    platform:"iPhone / iPad",
+    focus:"Circuit education and interactive challenges",
+    privacyNote:"Works fully offline and does not require accounts",
+    description:"CircuitLab Designer teaches how electrical circuits work through interactive challenges, progressive levels, smart hints, instant feedback and a clean offline learning experience.",
+    features:[
+      "Progressive circuit-building levels.",
+      "Smart hints that help without giving away the solution.",
+      "Instant feedback when a circuit works.",
+      "Minimal, offline learning interface designed for focus."
+    ]
+  }
 ];
 
-const grid=document.getElementById("grid");
-apps.forEach(a=>{
-  const el=document.createElement("div");
-  el.className="app";
-  el.innerHTML=`<div class="icon"><img src="${a.icon}"></div><div>${a.name}</div>`;
-  el.onclick=()=>openModal(a);
-  grid.appendChild(el);
+const grid = document.getElementById("appsGrid");
+const modal = document.getElementById("modal");
+const closeBtn = document.getElementById("closeBtn");
+
+function render(){
+  grid.innerHTML = "";
+
+  apps.forEach((app) => {
+    const item = document.createElement("article");
+    item.className = "app";
+
+    item.innerHTML = `
+      <div class="icon">
+        <img src="${app.icon}" alt="${app.name} icon">
+      </div>
+      <div class="app-info">
+        <h3>${app.name}</h3>
+        <div class="meta"><span class="mini-dot"></span>${app.version} ${app.status}</div>
+        <div class="tagline">${app.subtitle}</div>
+      </div>
+    `;
+
+    item.onclick = () => openModal(app);
+    grid.appendChild(item);
+  });
+}
+
+function openModal(app){
+  document.getElementById("modalIcon").innerHTML =
+    `<img src="${app.icon}" alt="${app.name} icon">`;
+
+  document.getElementById("modalTitle").textContent = app.name;
+
+  document.getElementById("modalSubtitle").innerHTML =
+    `<span class="dot yellow pulse"></span>${app.version} · ${app.status} · ${app.subtitle}`;
+
+  document.getElementById("modalDescription").textContent = app.description;
+  document.getElementById("modalPlatform").textContent = app.platform;
+  document.getElementById("modalStatus").textContent = app.status;
+  document.getElementById("modalFocus").textContent = app.focus;
+  document.getElementById("modalPrivacyNote").textContent = app.privacyNote;
+
+  document.getElementById("marketingLink").href = app.marketing;
+  document.getElementById("supportLink").href = app.support;
+  document.getElementById("privacyLink").href = app.privacy;
+
+  const features = document.getElementById("modalFeatures");
+  features.innerHTML = "";
+
+  app.features.forEach(f => {
+    const div = document.createElement("div");
+    div.className = "feature";
+    div.textContent = f;
+    features.appendChild(div);
+  });
+
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+closeBtn.onclick = closeModal;
+
+modal.onclick = e => {
+  if(e.target === modal) closeModal();
+};
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeModal();
 });
 
-function openModal(a){
-  title.innerText=a.name;
-  desc.innerText="Detailed info about "+a.name;
-  marketing.href=a.m;
-  support.href=a.m;
-  privacy.href=a.p;
-  modal.classList.add("active");
-}
-
-modal.onclick=e=>{if(e.target===modal)modal.classList.remove("active")};
-
-/* THEME */
-const toggle=document.getElementById("themeToggle");
-
-function setTheme(t){
-  document.body.classList.toggle("dark",t==="dark");
-  toggle.innerText=t==="dark"?"☀️ Light":"🌙 Dark";
-  localStorage.setItem("theme",t);
-}
-
-toggle.onclick=()=>setTheme(document.body.classList.contains("dark")?"light":"dark");
-setTheme(localStorage.getItem("theme")||"light");
+render();
 </script>
-
 </body>
 </html>
