@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ivan Kanev Apps — System Status</title>
+
+<style>
+:root{
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#1d1d1f;
+  --muted:#86868b;
+  --line:#d2d2d7;
+  --blue:#06c;
+  --green:#34c759;
+  --yellow:#f7c600;
+  --red:#ff3b30;
+  --shadow:0 30px 80px rgba(0,0,0,.14);
+  --radius:28px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 450px at 10% -10%,rgba(0,102,204,.12),transparent),
+    radial-gradient(800px 420px at 90% 0%,rgba(255,204,0,.18),transparent),
+    linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+  min-height:100vh;
+}
+
+.page{
+  max-width:1320px;
+  margin:auto;
+  padding:28px 28px 80px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:18px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(22px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand h1{
+  margin:0;
+  font-size:36px;
+  letter-spacing:-.04em;
+}
+
+.badge{
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--blue);
+  color:white;
+  font-weight:700;
+}
+
+.controls{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  color:var(--blue);
+  font-size:14px;
+}
+
+.search{
+  border:0;
+  background:transparent;
+  color:var(--blue);
+  font-size:16px;
+  outline:none;
+  width:160px;
+}
+
+.hero{
+  text-align:center;
+  padding:62px 20px 34px;
+}
+
+.hero h2{
+  font-size:52px;
+  line-height:1.02;
+  margin:0 0 14px;
+  letter-spacing:-.05em;
+}
+
+.hero p{
+  margin:0 auto;
+  max-width:720px;
+  color:var(--muted);
+  font-size:19px;
+  line-height:1.5;
+}
+
+.legend{
+  margin-top:26px;
+  display:flex;
+  justify-content:center;
+  gap:22px;
+  flex-wrap:wrap;
+  color:#555;
+  font-size:14px;
+}
+
+.dot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-block;
+  vertical-align:-2px;
+  margin-right:8px;
+}
+
+.green{background:var(--green)}
+.yellow{background:var(--yellow)}
+.red{background:var(--red)}
+
+.status-panel{
+  margin-top:22px;
+  background:rgba(255,255,255,.74);
+  border:1px solid rgba(210,210,215,.72);
+  border-radius:34px;
+  box-shadow:0 20px 70px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.app{
+  min-height:154px;
+  padding:28px;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  cursor:pointer;
+  border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);
+  transition:.25s ease;
+  background:rgba(255,255,255,.56);
+}
+
+.app:nth-child(3n){border-right:0}
+
+.app:hover{
+  background:white;
+  transform:translateY(-3px);
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
+  z-index:2;
+}
+
+.icon{
+  width:86px;
+  height:86px;
+  border-radius:24px;
+  display:grid;
+  place-items:center;
+  font-size:38px;
+  flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 14px 28px rgba(0,0,0,.15);
+  overflow:hidden;
+}
+
+.ufood{background:linear-gradient(135deg,#fff,#fff 55%,#f5f5f7); color:#111}
+.videoy{background:linear-gradient(135deg,#ff1b8d,#7b61ff,#42d3ff); color:white}
+.avocue{background:radial-gradient(circle at 50% 45%,#f7f85a 0 22%,#1b2b1c 48%,#07120b 100%); color:#8b2e0c}
+.switchair{background:linear-gradient(135deg,#080912,#141827); color:white}
+.budget{background:linear-gradient(135deg,#050713,#113c79,#7cf2e9); color:white}
+.uproxi{background:linear-gradient(135deg,#294b7d,#4d79a8); color:white}
+.ucircuit{background:linear-gradient(135deg,#25a7f2,#58d5ff); color:#04151f}
+.gitbudget{background:linear-gradient(135deg,#121a4b,#326bff,#9ef3ff); color:white}
+.circuitlab{background:#fff; color:#0f172a}
+
+.app-info h3{
+  margin:0 0 8px;
+  font-size:22px;
+  letter-spacing:-.03em;
+}
+
+.meta{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.meta .mini-dot{
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:var(--yellow);
+  display:inline-block;
+  margin-right:6px;
+}
+
+.tagline{
+  margin-top:8px;
+  font-size:14px;
+  color:#555;
+  line-height:1.35;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.36);
+  backdrop-filter:blur(18px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:100;
+}
+
+.modal.active{display:flex}
+
+.sheet{
+  width:min(980px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:36px;
+  background:
+    radial-gradient(700px 320px at 10% 0%,rgba(0,102,204,.13),transparent),
+    radial-gradient(620px 320px at 90% 0%,rgba(255,204,0,.18),transparent),
+    #fff;
+  box-shadow:var(--shadow);
+  animation:pop .28s ease;
+}
+
+@keyframes pop{
+  from{opacity:0; transform:translateY(22px) scale(.98)}
+  to{opacity:1; transform:none}
+}
+
+.sheet-head{
+  padding:34px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:22px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+}
+
+.close{
+  border:0;
+  background:#f5f5f7;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:22px;
+  color:#555;
+}
+
+.sheet h2{
+  margin:0;
+  font-size:42px;
+  letter-spacing:-.05em;
+}
+
+.sheet-sub{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:17px;
+}
+
+.sheet-body{
+  padding:34px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+}
+
+.card{
+  background:rgba(255,255,255,.76);
+  border:1px solid rgba(210,210,215,.8);
+  border-radius:26px;
+  padding:26px;
+}
+
+.card h4{
+  margin:0 0 14px;
+  font-size:20px;
+}
+
+.card p{
+  color:#555;
+  line-height:1.65;
+  margin:0;
+}
+
+.features{
+  display:grid;
+  gap:12px;
+}
+
+.feature{
+  padding:16px;
+  border-radius:18px;
+  background:#f5f5f7;
+  color:#333;
+  line-height:1.45;
+}
+
+.actions{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  text-decoration:none;
+  border-radius:16px;
+  padding:13px 18px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.primary{background:#000;color:white}
+.secondary{background:#f5f5f7;color:var(--blue)}
+
+.footer{
+  text-align:center;
+  padding:42px 20px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media(max-width:920px){
+  .grid{grid-template-columns:1fr}
+  .app{border-right:0}
+  .sheet-body{grid-template-columns:1fr}
+  .hero h2{font-size:40px}
+  .brand h1{font-size:30px}
+}
+
+@media(max-width:560px){
+  .topbar{align-items:flex-start; gap:16px; flex-direction:column}
+  .app{padding:22px; min-height:130px}
+  .icon{width:70px;height:70px;border-radius:20px;font-size:30px}
+  .sheet-head{grid-template-columns:auto 1fr; padding:24px}
+  .close{grid-column:2; justify-self:end; grid-row:1}
+  .sheet h2{font-size:32px}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <h1>Apps</h1>
+      <div class="badge">+</div>
+    </div>
+    <div class="controls">
+      <span>⌕</span>
+      <input id="search" class="search" placeholder="Search apps" />
+      <span>All Statuses⌄</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>System Status for Ivan Kanev Apps</h2>
+    <p>
+      A clean Apple-inspired overview of every app — with live-style status indicators,
+      product summaries, privacy notes, and direct support links.
+    </p>
+
+    <div class="legend">
+      <span><i class="dot green"></i>Available</span>
+      <span><i class="dot yellow"></i>Waiting for Review</span>
+      <span><i class="dot red"></i>Issue</span>
+    </div>
+  </section>
+
+  <main class="status-panel">
+    <div class="grid" id="appsGrid"></div>
+  </main>
+
+  <div class="footer">
+    © 2026 Ivan Kanev Apps · Built for GitHub Pages
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="icon" id="modalIcon"></div>
+      <div>
+        <h2 id="modalTitle"></h2>
+        <div class="sheet-sub" id="modalSubtitle"></div>
+      </div>
+      <button class="close" id="closeBtn">×</button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="card">
+        <h4>What it does</h4>
+        <p id="modalDescription"></p>
+
+        <div class="actions">
+          <a class="btn primary" id="supportLink" target="_blank">Open Support Page</a>
+          <a class="btn secondary" id="privacyLink" target="_blank">Privacy</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Highlights</h4>
+        <div class="features" id="modalFeatures"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const apps = [
+  {
+    name:"UFood",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"🍴",
+    cls:"ufood",
+    subtitle:"Private recipe studio for iPhone & iPad",
+    url:"https://ivan-kanev.github.io/ufood-support/index.html",
+    privacy:"https://ivan-kanev.github.io/ufood-support/privacy.html",
+    description:"UFood is a private recipe studio that helps users save meals, organize personal recipes with photos, track favorites, and understand cooking habits through beautiful food statistics and nutrition-style estimates.",
+    features:[
+      "Create recipes with ingredients, steps, servings, prep time and photos.",
+      "Browse a polished private food library with meal filters and favorites.",
+      "Understand cooking habits with taste map, rankings, calories and protein estimates.",
+      "Local-first, private, Apple-native experience."
+    ]
+  },
+  {
+    name:"VideoY",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"▶",
+    cls:"videoy",
+    subtitle:"Clean YouTube-focused web experience",
+    url:"https://ivan-kanev.github.io/videoy-support/index.html",
+    privacy:"https://ivan-kanev.github.io/videoy-support/privacy.html",
+    description:"VideoY is a lightweight native-feeling wrapper around the YouTube mobile web experience. It focuses on clean browsing, fast access, simple navigation, sharing, and a more focused viewing flow.",
+    features:[
+      "Launches directly into YouTube mobile web.",
+      "Native controls for home, back, forward, reload, sign-in and sharing.",
+      "Gesture-friendly browsing with a minimal bottom control bar.",
+      "Does not download, extract or modify YouTube content."
+    ]
+  },
+  {
+    name:"AvoCue",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"🥑",
+    cls:"avocue",
+    subtitle:"Smart avocado freshness guidance",
+    url:"https://ivan-kanev.github.io/avocue-support/index.html",
+    privacy:"https://ivan-kanev.github.io/avocue-support/privacy.html",
+    description:"AvoCue helps users evaluate avocado ripeness, track what they bought, review past checks, and make better timing decisions through a premium dark interface.",
+    features:[
+      "Quick avocado freshness and ripeness guidance.",
+      "Camera-centered flow for fast visual checking.",
+      "History tracking for previous results.",
+      "Premium dark UI with glass-like panels and consistent navigation."
+    ]
+  },
+  {
+    name:"SwitchAir",
+    version:"iOS 1.0",
+    status:"Waiting for Review",
+    icon:"✈",
+    cls:"switchair",
+    subtitle:"Flight reminders, refined",
+    url:"https://ivan-kanev.github.io/switchair-support/index.html",
+    privacy:"https://ivan-kanev.github.io/switchair-support/privacy.html",
+    description:"SwitchAir helps travelers remember exactly when to enable and disable Airplane Mode. It supports boarding pass import, manual flight entry, precise local reminders, and a clean flight history.",
+    features:[
+      "Takeoff reminders before departure.",
+      "Landing reminders after arrival.",
+      "Flight details with airline, route, departure, arrival and duration.",
+      "Import using image/OCR or enter flights manually."
+    ]
+  },
+  {
+    name:"BudgetFlow Studio",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"〽",
+    cls:"budget",
+    subtitle:"Visual-first personal finance",
+    url:"https://ivan-kanev.github.io/budgetflow-studio-support/index.html",
+    privacy:"https://ivan-kanev.github.io/budgetflow-studio-support/privacy.html",
+    description:"BudgetFlow Studio is a privacy-first personal finance app designed around visual clarity instead of spreadsheets. It focuses on flows, bars, trends, predictions and deep analytics.",
+    features:[
+      "No accounts, no subscriptions, privacy-first.",
+      "Dashboard for instant financial overview.",
+      "Spending bars and flow visualizations.",
+      "Advanced insights, predictions and trends with Pro."
+    ]
+  },
+  {
+    name:"UProxi",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"💳",
+    cls:"uproxi",
+    subtitle:"Location-aware loyalty cards for Bulgaria",
+    url:"https://ivan-kanev.github.io/uproxi-support/index.html",
+    privacy:"https://ivan-kanev.github.io/uproxi-support/privacy.html",
+    description:"UProxi shows the right loyalty card when the user is near a supported store in Bulgaria. It reduces searching at checkout with proximity hints, card scanning, and organized local storage.",
+    features:[
+      "Nearby supported stores with distance indicators.",
+      "One-tap barcode or QR card display.",
+      "Card list with brand icons and quick actions.",
+      "Local notifications when a relevant card is nearby."
+    ]
+  },
+  {
+    name:"UCircuit",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"💡",
+    cls:"ucircuit",
+    subtitle:"First engineering lab for kids",
+    url:"https://ivan-kanev.github.io/ucircuit-support/index.html",
+    privacy:"https://ivan-kanev.github.io/ucircuit-support/privacy.html",
+    description:"UCircuit is a playful visual learning app that helps children understand electricity through guided circuit labs, safe experimentation, instant feedback, badges and a parent-friendly Pro unlock.",
+    features:[
+      "Guided labs starting from Battery + Bulb + Switch.",
+      "Instant animation-based feedback.",
+      "Badges, favorites and progress motivation.",
+      "Free starter lab plus one-time Pro unlock."
+    ]
+  },
+  {
+    name:"GitBudget Studio",
+    version:"iOS 1.0.2",
+    status:"Waiting for Review",
+    icon:"💲",
+    cls:"gitbudget",
+    subtitle:"Income, expenses and trends",
+    url:"https://ivan-kanev.github.io/gitbudgetstudio-support/",
+    privacy:"https://ivan-kanev.github.io/gitbudgetstudio-support/privacy.html",
+    description:"GitBudget is a modern personal finance app focused on clarity, income, expenses, trends and visual understanding rather than spreadsheet-style budgeting.",
+    features:[
+      "Income overview and expense tracking.",
+      "Smart history with edit, duplicate and transaction management.",
+      "Trends, sources and drains for financial behavior.",
+      "Fast transaction entry and readable charts."
+    ]
+  },
+  {
+    name:"CircuitLab Designer",
+    version:"iOS 1.3",
+    status:"Waiting for Review",
+    icon:"💡",
+    cls:"circuitlab",
+    subtitle:"Build circuits. See electricity.",
+    url:"https://ivan-kanev.github.io/circuitlab-designer-support/index.html",
+    privacy:"https://ivan-kanev.github.io/circuitlab-designer-support/privacy.html",
+    description:"CircuitLab Designer teaches how electrical circuits work through interactive challenges, progressive levels, smart hints, instant feedback and a clean offline Apple-style learning experience.",
+    features:[
+      "Progressive circuit-building levels.",
+      "Smart hints without spoilers.",
+      "Instant feedback when a circuit works.",
+      "Minimal offline learning UI."
+    ]
+  }
+];
+
+const grid = document.getElementById("appsGrid");
+const search = document.getElementById("search");
+const modal = document.getElementById("modal");
+const closeBtn = document.getElementById("closeBtn");
+
+function render(list){
+  grid.innerHTML = "";
+  list.forEach((app, index) => {
+    const item = document.createElement("article");
+    item.className = "app";
+    item.style.animationDelay = `${index * 40}ms`;
+    item.innerHTML = `
+      <div class="icon ${app.cls}">${app.icon}</div>
+      <div class="app-info">
+        <h3>${app.name}</h3>
+        <div class="meta"><span class="mini-dot"></span>${app.version} ${app.status}</div>
+        <div class="tagline">${app.subtitle}</div>
+      </div>
+    `;
+    item.onclick = () => openModal(app);
+    grid.appendChild(item);
+  });
+}
+
+function openModal(app){
+  document.getElementById("modalIcon").className = `icon ${app.cls}`;
+  document.getElementById("modalIcon").textContent = app.icon;
+  document.getElementById("modalTitle").textContent = app.name;
+  document.getElementById("modalSubtitle").innerHTML =
+    `<span class="dot yellow"></span>${app.version} · ${app.status} · ${app.subtitle}`;
+  document.getElementById("modalDescription").textContent = app.description;
+  document.getElementById("supportLink").href = app.url;
+  document.getElementById("privacyLink").href = app.privacy;
+
+  const features = document.getElementById("modalFeatures");
+  features.innerHTML = "";
+  app.features.forEach(f => {
+    const div = document.createElement("div");
+    div.className = "feature";
+    div.textContent = f;
+    features.appendChild(div);
+  });
+
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+closeBtn.onclick = closeModal;
+modal.onclick = e => { if(e.target === modal) closeModal(); };
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+search.addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  render(apps.filter(app =>
+    app.name.toLowerCase().includes(q) ||
+    app.subtitle.toLowerCase().includes(q) ||
+    app.description.toLowerCase().includes(q)
+  ));
+});
+
+render(apps);
+</script>
+</body>
+</html>
